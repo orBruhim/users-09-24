@@ -1,1 +1,32 @@
-<p>users works!</p>
+<div class="header-wrapper">
+    <div class="title"> My users</div>
+</div>
+<hr/>
+
+<div class="users-wrapper">
+    <table>
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Birthdate</th>
+            <th>Addresses Count</th>
+            <th>Actions</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+            @for (user of (users$ | async); track user.id) {
+                <tr>
+                    <td>{{ user.id }}</td>
+                    <td>{{ user.name | titlecase }}</td>
+                    <td>{{ user.birthdate | date }}</td>
+                    <td>{{ user.addresses.length }}</td>
+                    <td>
+                        <button (click)="navigateToAddUser(user.id)"> Edit user</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

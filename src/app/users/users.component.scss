@@ -1,0 +1,41 @@
+.header-wrapper {
+  text-align: center;
+  margin-bottom: 10px;
+
+  .title {
+    font-size: 18px;
+    font-weight: 700;
+    color: #333;
+  }
+}
+
+.users-wrapper {
+  margin: 15px;
+  display: flex;
+  justify-content: center;
+
+  table {
+    width: 80%;
+    border-collapse: collapse;
+    text-align: left;
+    border: 1px solid #ccc;
+
+    thead {
+      background-color: #f4f4f4;
+
+      th {
+        padding: 10px;
+        font-size: 18px;
+        font-weight: 700;
+        border-bottom: 2px solid #ccc;
+        text-align: left;
+      }
+    }
+
+    td {
+      padding: 10px;
+      border-bottom: 1px solid #eaeaea;
+      text-align: left;
+    }
+  }
+}
