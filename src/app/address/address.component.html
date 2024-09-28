@@ -1,24 +1,21 @@
-<div [formGroup]="addressForm">
-    <label>Address Name</label>
-    <input formControlName="addressName"/>
+<div [formGroup]="addressForm" class="address-group">
+    <label >Address Name</label>
+    <input formControlName="addressName" />
 
-    <label>Street</label>
-    <input formControlName="street"/>
+    <label >Street</label>
+    <input formControlName="street" />
 
-    <label>Country</label>
-    <select formControlName="country">
+    <label >Country</label>
+    <select formControlName="country" >
         @for (country of countries(); track $index) {
             <option [value]="country.id">{{ country.name }}</option>
         }
     </select>
 
-    <label>City</label>
-    <select formControlName="city">
+    <label >City</label>
+    <select formControlName="city" >
         @for (city of cities(); track $index) {
             <option [value]="city.id">{{ city.name }}</option>
         }
     </select>
-
-
-
 </div>

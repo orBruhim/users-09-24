@@ -1,0 +1,56 @@
+.user-form {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+}
+
+label {
+  font-weight: bold;
+}
+
+input, select {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin: 10px 0;
+}
+
+.addresses-section {
+  margin-top: 20px;
+  background-color: #f0f0f0;
+}
+
+.address-group {
+  margin-bottom: 15px;
+  padding: 10px;
+  background-color: #fff;
+}
+
+button {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  color: white;
+  cursor: pointer;
+}
+
+.add-btn {
+  background-color: #4CAF50;
+  margin-bottom: 20px;
+}
+
+.remove-btn {
+  background-color: #ff6666;
+  margin-top: 10px;
+}
+
+
+.submit-btn {
+  background-color: #008CBA;
+}
+

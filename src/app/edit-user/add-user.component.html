@@ -1,21 +1,21 @@
-<form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+`<form [formGroup]="userForm" (ngSubmit)="onSubmit()" class="user-form">
     <label>User Name</label>
-    <input type="text" formControlName="name"/>
+    <input type="text" formControlName="name" placeholder="Enter your name" />
 
     <label>Birthdate</label>
-    <input type="date" formControlName="birthdate"/>
+    <input type="date" formControlName="birthdate" />
 
-    <div formArrayName="addresses">
+    <div formArrayName="addresses" class="addresses-section">
         @for(address of addresses.controls; track $index) {
-            <div [formGroupName]="$index">
+            <div [formGroupName]="$index" class="address-group">
                 <app-address></app-address>
                 @if(addresses.length > 1) {
-                    <button type="button" (click)="removeAddress($index)">Remove Address</button>
+                    <button type="button" class="remove-btn" (click)="removeAddress($index)">Remove Address</button>
                 }
             </div>
         }
     </div>
 
-    <button type="button" (click)="addAddress()">Add Address</button>
-    <button type="submit" [disabled]="userForm.invalid">Save</button>
+    <button type="button" class="add-btn" (click)="addAddress()">Add Address</button>
+    <button type="submit" class="submit-btn" [disabled]="userForm.invalid">Save</button>
 </form>
