@@ -1,4 +1,4 @@
-<form [formGroup]="userForm" (ngSubmit)="onSubmit()" class="user-form">
+<form [formGroup]="userForm" class="user-form">
     <div>
         <label>User Name
             <span>*</span>
@@ -20,7 +20,7 @@
     <div formArrayName="addresses" class="addresses-section">
         @for (address of addresses.controls; track $index) {
             <div [formGroupName]="$index" class="address-group">
-                <app-address></app-address>
+                <app-address (addressFormSaved)="onAddressFormSaved()"></app-address>
                 @if(addresses.length > 1) {
                     <button type="button" class="remove-btn" (click)="removeAddress($index)">Remove Address</button>
                 }
@@ -29,5 +29,6 @@
     </div>
 
     <button type="button" class="add-btn" (click)="addAddress()">Add Address</button>
-    <button type="submit" class="submit-btn" [disabled]="userForm.invalid">Save</button>
+    <button [disabled]="(!isAddressFormValid || userForm.invalid)"
+            (click)="-onSubmit()" class="submit-btn">Save</button>
 </form>

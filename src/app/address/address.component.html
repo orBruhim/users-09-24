@@ -34,4 +34,5 @@
             <option [value]="city.id">{{ city.name }}</option>
         }
     </select>
+    <button (click)="onSubmit()" [disabled]="addressForm.invalid">Save Address</button>
 </div>

@@ -23,8 +23,7 @@ export class UsersService {
     }
 
     addUser(user: User): Observable<User> {
-        debugger
-        return this.http.post<User>(`${this.baseUrl}/persons`, user);
+        return this.http.post<User>(`${this.baseUrl}/person`, user);
     }
 
     getCountries() : Observable<Country[]> {
@@ -38,8 +37,8 @@ export class UsersService {
     getCitiesByCountry(countryId: number) :Observable<City[]> {
         return this.http.get<City[]>(`${this.baseUrl}/cities/${countryId}`).pipe(
             tap(cities => {
-                this.cities.set([{name: 'or', countryId: 1, id: 2 }])
-                // this.cities.set(cities);
+                // this.cities.set([{name: 'or', countryId: 1, id: 2 }])
+                this.cities.set(cities);
             })
         );
 }

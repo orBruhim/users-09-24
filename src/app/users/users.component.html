@@ -20,7 +20,7 @@
                 <tr>
                     <td>{{ user.id }}</td>
                     <td>{{ user.name | titlecase }}</td>
-                    <td>{{ user.birthdate | date }}</td>
+                    <td>{{ user.birthdate !=='NA' ? (user.birthdate | date ) : '' }}</td>
                     <td>{{ user.addresses.length }}</td>
                 </tr>
             }

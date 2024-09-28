@@ -3,6 +3,7 @@ import {Subscription} from "rxjs";
 import {UsersService} from "../shared/users.service";
 import {FormArray, FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {AddressComponent} from "../address/address.component";
+import {Router} from "@angular/router";
 
 @Component({
     selector: 'app-add-user',
@@ -18,11 +19,15 @@ import {AddressComponent} from "../address/address.component";
 })
 export class AddUserComponent implements OnInit, OnDestroy {
 
-    private subscriptions = new Subscription();
-    private usersService = inject(UsersService);
-    private fb = inject(FormBuilder);
-
     userForm!: FormGroup;
+    isAddressFormValid= false;
+
+    private subscriptions = new Subscription();
+
+    private fb = inject(FormBuilder);
+    private router = inject(Router);
+    private usersService = inject(UsersService);
+
 
     ngOnInit(): void {
         this.initializeForm();
@@ -33,8 +38,9 @@ export class AddUserComponent implements OnInit, OnDestroy {
     }
 
     onSubmit(): void {
-        if (this.userForm.valid) {
+        if (this.userForm.valid && this.addresses.length>=1 && this.isAddressFormValid) {
             this.usersService.addUser(this.userForm.value).subscribe()
+            this.router.navigate(['/users'])
         } else {
             console.log('Form is not valid');
         }
@@ -46,9 +52,9 @@ export class AddUserComponent implements OnInit, OnDestroy {
 
     createAddressGroup(): FormGroup {
         return this.fb.group({
-            addressName: ['', Validators.required],
-            street: ['', Validators.required],
-            country: ['', Validators.required],
+            addressName: [''],
+            street: [''],
+            country: [''],
             city: this.fb.array([])
         });
     }
@@ -61,6 +67,9 @@ export class AddUserComponent implements OnInit, OnDestroy {
         if (this.addresses.length > 1) {
             this.addresses.removeAt(index);
         }
+    }
+    onAddressFormSaved() :void {
+        this.isAddressFormValid= true;
     }
 
     private initializeForm(): void {

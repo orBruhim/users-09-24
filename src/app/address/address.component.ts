@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, inject, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component, EventEmitter, inject, OnInit, Output} from '@angular/core';
 import {ControlValueAccessor, FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {UsersService} from "../shared/users.service";
 import {switchMap} from "rxjs";
@@ -14,6 +14,8 @@ import {switchMap} from "rxjs";
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AddressComponent implements ControlValueAccessor, OnInit {
+
+    @Output() addressFormSaved= new EventEmitter<void>();
     private fb = inject(FormBuilder);
     private usersService = inject(UsersService);
 
@@ -23,8 +25,8 @@ export class AddressComponent implements ControlValueAccessor, OnInit {
     addressForm: FormGroup = this.fb.group({
         addressName: ['', Validators.required],
         street: ['', Validators.required],
-        country: ['', Validators.required],
-        city: ['', Validators.required],
+        country: [''],
+        city: [''],
     });
 
     ngOnInit(): void {
@@ -48,6 +50,14 @@ export class AddressComponent implements ControlValueAccessor, OnInit {
 
 
     registerOnTouched(fn: any): void {
+    }
+
+    onSubmit() {
+        if (this.addressForm.valid) {
+            this.addressFormSaved.emit();
+        } else {
+            console.log('Address Form is not valid');
+        }
     }
 
 
