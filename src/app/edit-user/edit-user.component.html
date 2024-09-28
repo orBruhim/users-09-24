@@ -1,1 +1,7 @@
-<p>edit-user works!</p>
+<form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+    <label>User Name</label>
+    <input type="text" formControlName="name" />
+    <label>Birthdate</label>
+    <input type="date" formControlName="birthdate" />
+    <button type="submit" [disabled]="userForm.invalid">Save</button>
+</form>

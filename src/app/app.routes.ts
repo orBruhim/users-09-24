@@ -7,7 +7,7 @@ export const routes: Routes = [
             import('./users/users.module').then(({UsersModule}) => UsersModule)
     },
     {
-        path: 'users/:id',
+        path: 'users/add',
         loadChildren: () =>
             import('./edit-user/edit-user.module').then(({EditUserModule}) => EditUserModule),
     },

@@ -18,7 +18,8 @@ export class UsersService {
         );
     }
 
-    getUserById(id: number): User | null {
-        return this.users().find(user => +user.id === +id) || null;
+    addUser(user: User): Observable<User> {
+        debugger
+        return this.http.post<User>(`${this.baseUrl}/persons`, user);
     }
 }

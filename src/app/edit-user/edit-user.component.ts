@@ -1,31 +1,35 @@
 import {Component, inject, OnDestroy, OnInit} from '@angular/core';
-import {Subscription, switchMap, tap} from "rxjs";
-import {ActivatedRoute} from "@angular/router";
+import {Subscription} from "rxjs";
 import {UsersService} from "../shared/users.service";
+import {FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 
 @Component({
     selector: 'app-edit-user',
     standalone: true,
-    imports: [],
+    imports: [
+        ReactiveFormsModule
+    ],
     templateUrl: './edit-user.component.html',
     styleUrl: './edit-user.component.scss'
 })
-export class EditUserComponent implements OnInit,OnDestroy {
+export class EditUserComponent implements OnInit, OnDestroy {
 
     private subscriptions = new Subscription();
-    private activatedRoute = inject(ActivatedRoute);
     private usersService = inject(UsersService);
+    private fb = inject(FormBuilder);
+
+    userForm!: FormGroup;
 
     ngOnInit(): void {
         this.initializeForm();
     }
 
     onSubmit(): void {
-        // if (this.contactForm.valid) {
-        //   this.editContact ? this.contactsService.updateContact(this.contactForm.value).subscribe(): this.contactsService.addContact(this.contactForm.value).subscribe();
-        // } else {
-        //   console.log('Form is not valid');
-        // }
+        if (this.userForm.valid) {
+            this.usersService.addUser(this.userForm.value).subscribe()
+        } else {
+            console.log('Form is not valid');
+        }
     }
 
     ngOnDestroy(): void {
@@ -33,16 +37,9 @@ export class EditUserComponent implements OnInit,OnDestroy {
     }
 
     private initializeForm(): void {
-        const sub = this.activatedRoute.params.pipe(
-            switchMap(params =>
-                this.usersService.getUsers().pipe(
-                    tap(() =>  {
-                        console.log(this.usersService.getUserById(params['id']))
-                    }
-                    ))
-            )
-        ).subscribe();
-        this.subscriptions.add(sub);
+        this.userForm = this.fb.group({
+            name: new FormControl('', Validators.required),
+            birthdate: new FormControl('')
+        });
     }
-
 }

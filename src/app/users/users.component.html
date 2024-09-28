@@ -3,6 +3,7 @@
 </div>
 <hr/>
 
+<button class="add-user" (click)="navigateToAddUser()"> add user</button>
 <div class="users-wrapper">
     <table>
         <thead>
@@ -11,7 +12,6 @@
             <th>Name</th>
             <th>Birthdate</th>
             <th>Addresses Count</th>
-            <th>Actions</th>
             <th></th>
         </tr>
         </thead>
@@ -22,9 +22,6 @@
                     <td>{{ user.name | titlecase }}</td>
                     <td>{{ user.birthdate | date }}</td>
                     <td>{{ user.addresses.length }}</td>
-                    <td>
-                        <button (click)="navigateToAddUser(user.id)"> Edit user</button>
-                    </td>
                 </tr>
             }
         </tbody>

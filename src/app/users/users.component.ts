@@ -25,7 +25,7 @@ export class UsersComponent implements OnInit{
   }
 
 
-  navigateToAddUser(id: number) :void  {
-    this.router.navigate(['/users', id])
+  navigateToAddUser() :void  {
+    this.router.navigate(['/users/add'])
   }
 }
