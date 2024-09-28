@@ -38,8 +38,8 @@ export class UsersService {
     getCitiesByCountry(countryId: number) :Observable<City[]> {
         return this.http.get<City[]>(`${this.baseUrl}/cities/${countryId}`).pipe(
             tap(cities => {
-                // this.cities.set([{name: 'or', countryId: 1, id: 2 }])
-                this.cities.set(cities);
+                this.cities.set([{name: 'or', countryId: 1, id: 2 }])
+                // this.cities.set(cities);
             })
         );
 }

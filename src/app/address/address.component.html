@@ -5,16 +5,20 @@
     <label>Street</label>
     <input formControlName="street"/>
 
-    <label>City</label>
-    <select formControlName="city">
-        @for (city of cities(); track $index) {
-            <option [value]="city.id">{{ city.name }}</option>
-        }
-    </select>
     <label>Country</label>
     <select formControlName="country">
         @for (country of countries(); track $index) {
             <option [value]="country.id">{{ country.name }}</option>
         }
     </select>
+
+    <label>City</label>
+    <select formControlName="city">
+        @for (city of cities(); track $index) {
+            <option [value]="city.id">{{ city.name }}</option>
+        }
+    </select>
+
+
+
 </div>

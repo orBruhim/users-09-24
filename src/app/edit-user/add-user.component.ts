@@ -48,7 +48,8 @@ export class AddUserComponent implements OnInit, OnDestroy {
         return this.fb.group({
             addressName: ['', Validators.required],
             street: ['', Validators.required],
-            city: ['', Validators.required]
+            country: ['', Validators.required],
+            city: this.fb.array([])
         });
     }
 
