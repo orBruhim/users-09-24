@@ -1,9 +1,25 @@
 <div [formGroup]="addressForm" class="address-group">
-    <label >Address Name</label>
+    <label >Address Name
+        <span>*</span>
+    </label>
     <input formControlName="addressName" />
 
-    <label >Street</label>
+    @if (addressForm.get('addressName')?.invalid && addressForm.get('addressName')?.touched) {
+        <div class="error-message">
+            Address Name is required.
+        </div>
+    }
+
+    <label >Street
+        <span>*</span>
+    </label>
     <input formControlName="street" />
+
+    @if(addressForm.get('street')?.invalid && addressForm.get('street')?.touched) {
+        <div class="error-message" >
+            Street is required.
+        </div>
+    }
 
     <label >Country</label>
     <select formControlName="country" >

@@ -1,12 +1,24 @@
-`<form [formGroup]="userForm" (ngSubmit)="onSubmit()" class="user-form">
-    <label>User Name</label>
-    <input type="text" formControlName="name" placeholder="Enter your name" />
+<form [formGroup]="userForm" (ngSubmit)="onSubmit()" class="user-form">
+    <div>
+        <label>User Name
+            <span>*</span>
+        </label>
+        <input type="text" formControlName="name" placeholder="Enter your name" class="form-input"/>
+        @if (userForm.get('name')?.invalid && userForm.get('name')?.touched) {
+            <div class="error-message">
+                User Name is required.
+            </div>
+        }
 
-    <label>Birthdate</label>
-    <input type="date" formControlName="birthdate" />
+    </div>
+
+    <div class="form-group">
+        <label>Birthdate</label>
+        <input type="date" formControlName="birthdate"/>
+    </div>
 
     <div formArrayName="addresses" class="addresses-section">
-        @for(address of addresses.controls; track $index) {
+        @for (address of addresses.controls; track $index) {
             <div [formGroupName]="$index" class="address-group">
                 <app-address></app-address>
                 @if(addresses.length > 1) {
