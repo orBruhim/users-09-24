@@ -9,7 +9,7 @@ export const routes: Routes = [
     {
         path: 'users/add',
         loadChildren: () =>
-            import('./edit-user/edit-user.module').then(({EditUserModule}) => EditUserModule),
+            import('./edit-user/add-user.module').then(({AddUserModule}) => AddUserModule),
     },
     {path: '**', redirectTo: '/users', pathMatch: 'full'},
 ];

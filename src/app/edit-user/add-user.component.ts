@@ -4,15 +4,15 @@ import {UsersService} from "../shared/users.service";
 import {FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 
 @Component({
-    selector: 'app-edit-user',
+    selector: 'app-add-user',
     standalone: true,
     imports: [
         ReactiveFormsModule
     ],
-    templateUrl: './edit-user.component.html',
-    styleUrl: './edit-user.component.scss'
+    templateUrl: './add-user.component.html',
+    styleUrl: './add-user.component.scss'
 })
-export class EditUserComponent implements OnInit, OnDestroy {
+export class AddUserComponent implements OnInit, OnDestroy {
 
     private subscriptions = new Subscription();
     private usersService = inject(UsersService);
