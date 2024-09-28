@@ -1,5 +1,5 @@
-import {ChangeDetectionStrategy, Component, inject} from '@angular/core';
-import {UsersService} from "./users.service";
+import {ChangeDetectionStrategy, Component, inject, OnInit} from '@angular/core';
+import {UsersService} from "../shared/users.service";
 import {AsyncPipe, DatePipe, TitleCasePipe} from "@angular/common";
 import {Router} from "@angular/router";
 
@@ -9,16 +9,20 @@ import {Router} from "@angular/router";
   imports: [
     TitleCasePipe,
     AsyncPipe,
-    DatePipe
+    DatePipe,
   ],
   templateUrl: './users.component.html',
   styleUrl: './users.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class UsersComponent {
+export class UsersComponent implements OnInit{
   private usersService= inject(UsersService);
   private router= inject(Router);
-  users$= this.usersService.getUsers();
+  users= this.usersService.users;
+
+  ngOnInit() :void {
+    this.usersService.getUsers().subscribe();
+  }
 
 
   navigateToAddUser(id: number) :void  {
