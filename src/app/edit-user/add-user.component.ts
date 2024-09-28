@@ -1,16 +1,20 @@
-import {Component, inject, OnDestroy, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component, inject, OnDestroy, OnInit} from '@angular/core';
 import {Subscription} from "rxjs";
 import {UsersService} from "../shared/users.service";
-import {FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
+import {FormArray, FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
+import {AddressComponent} from "../address/address.component";
 
 @Component({
     selector: 'app-add-user',
     standalone: true,
     imports: [
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        AddressComponent
     ],
     templateUrl: './add-user.component.html',
-    styleUrl: './add-user.component.scss'
+    styleUrl: './add-user.component.scss',
+    changeDetection: ChangeDetectionStrategy.OnPush
+
 })
 export class AddUserComponent implements OnInit, OnDestroy {
 
@@ -24,6 +28,10 @@ export class AddUserComponent implements OnInit, OnDestroy {
         this.initializeForm();
     }
 
+    ngOnDestroy(): void {
+        this.subscriptions.unsubscribe();
+    }
+
     onSubmit(): void {
         if (this.userForm.valid) {
             this.usersService.addUser(this.userForm.value).subscribe()
@@ -32,14 +40,33 @@ export class AddUserComponent implements OnInit, OnDestroy {
         }
     }
 
-    ngOnDestroy(): void {
-        this.subscriptions.unsubscribe();
+    get addresses(): FormArray {
+        return this.userForm.get('addresses') as FormArray;
+    }
+
+    createAddressGroup(): FormGroup {
+        return this.fb.group({
+            addressName: ['', Validators.required],
+            street: ['', Validators.required],
+            city: ['', Validators.required]
+        });
+    }
+
+    addAddress() {
+        this.addresses.push(this.createAddressGroup());
+    }
+
+    removeAddress(index: number) {
+        if (this.addresses.length > 1) {
+            this.addresses.removeAt(index);
+        }
     }
 
     private initializeForm(): void {
         this.userForm = this.fb.group({
             name: new FormControl('', Validators.required),
-            birthdate: new FormControl('')
+            birthdate: new FormControl(''),
+            addresses: this.fb.array([this.createAddressGroup()])
         });
     }
 }

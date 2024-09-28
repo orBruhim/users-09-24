@@ -1,7 +1,21 @@
 <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
     <label>User Name</label>
-    <input type="text" formControlName="name" />
+    <input type="text" formControlName="name"/>
+
     <label>Birthdate</label>
-    <input type="date" formControlName="birthdate" />
+    <input type="date" formControlName="birthdate"/>
+
+    <div formArrayName="addresses">
+        @for(address of addresses.controls; track $index) {
+            <div [formGroupName]="$index">
+                <app-address></app-address>
+                @if(addresses.length > 1) {
+                    <button type="button" (click)="removeAddress($index)">Remove Address</button>
+                }
+            </div>
+        }
+    </div>
+
+    <button type="button" (click)="addAddress()">Add Address</button>
     <button type="submit" [disabled]="userForm.invalid">Save</button>
 </form>
