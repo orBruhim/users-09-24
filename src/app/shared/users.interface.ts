@@ -7,7 +7,7 @@ export interface User {
 
 export interface Address {
     name: string,
-    countrId: number,
+    countryId: number,
     cityId: number,
     street: string
 }

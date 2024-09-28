@@ -26,7 +26,7 @@ export class UsersService {
         return this.http.post<User>(`${this.baseUrl}/person`, user);
     }
 
-    getCountries() : Observable<Country[]> {
+    getCountries(): Observable<Country[]> {
         return this.http.get<Country[]>(`${this.baseUrl}/countries`).pipe(
             tap(countries => {
                 this.countries.set(countries)
@@ -34,12 +34,23 @@ export class UsersService {
         );
     }
 
-    getCitiesByCountry(countryId: number) :Observable<City[]> {
+    getCitiesByCountry(countryId: number): Observable<City[]> {
         return this.http.get<City[]>(`${this.baseUrl}/cities/${countryId}`).pipe(
             tap(cities => {
-                // this.cities.set([{name: 'or', countryId: 1, id: 2 }])
                 this.cities.set(cities);
             })
         );
-}
+    }
+
+    addCity(city: City) :Observable<City> {
+        const body= {
+            name: city.name,
+            countryId: +city.countryId,
+        }
+        return this.http.post<City>(`${this.baseUrl}/city`, body).pipe(
+            tap(() => {
+                this.getCitiesByCountry(+city.countryId)
+            })
+        )
+    }
 }

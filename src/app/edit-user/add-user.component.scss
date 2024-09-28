@@ -1,10 +1,16 @@
+.forms-wrapper {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  margin: 40px;
+}
 .user-form {
   max-width: 600px;
-  margin: 0 auto;
   padding: 20px;
   border: 1px solid #ccc;
   border-radius: 8px;
   background-color: #f9f9f9;
+  height: 100%;
 }
 
 label {
@@ -41,6 +47,7 @@ button {
   padding: 10px;
   border: none;
   border-radius: 4px;
+  cursor: pointer;
 }
 
 .add-btn {

@@ -20,6 +20,7 @@ import {Router} from "@angular/router";
 export class AddUserComponent implements OnInit, OnDestroy {
 
     userForm!: FormGroup;
+    cityForm!: FormGroup;
     isAddressFormValid= false;
 
     private subscriptions = new Subscription();
@@ -28,6 +29,7 @@ export class AddUserComponent implements OnInit, OnDestroy {
     private router = inject(Router);
     private usersService = inject(UsersService);
 
+    countries = this.usersService.countries;
 
     ngOnInit(): void {
         this.initializeForm();
@@ -72,11 +74,22 @@ export class AddUserComponent implements OnInit, OnDestroy {
         this.isAddressFormValid= true;
     }
 
+    submitCityForm() :void {
+        if(this.cityForm.valid) {
+            this.usersService.addCity(this.cityForm.value).subscribe()
+        }
+    }
+
     private initializeForm(): void {
         this.userForm = this.fb.group({
             name: new FormControl('', Validators.required),
             birthdate: new FormControl(''),
             addresses: this.fb.array([this.createAddressGroup()])
         });
+        this.cityForm= this.fb.group({
+            name: new FormControl('', Validators.required),
+            countryId: new FormControl('', Validators.required)
+        })
     }
+
 }
