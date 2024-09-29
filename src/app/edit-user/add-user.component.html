@@ -1,57 +1,65 @@
 <div class="forms-wrapper">
     <form [formGroup]="cityForm" class="user-form">
-
         <div>
-            <label >Country</label>
-            <select formControlName="countryId" >
+            <label>Country
+                <span>*</span>
+            </label>
+            <select formControlName="countryId">
                 @for (country of countries(); track $index) {
                     <option [value]="+country.id">{{ country.name }}</option>
                 }
             </select>
+            @if (cityForm.get('countryId')?.invalid && cityForm.get('countryId')?.touched) {
+                <div class="error-message">
+                    Country is required.
+                </div>
+            }
             <label>City
                 <span>*</span>
             </label>
             <input type="text" formControlName="name" placeholder="Add city" class="form-input"/>
-            @if (cityForm.get('city')?.invalid && cityForm.get('city')?.touched) {
+            @if (cityForm.get('name')?.invalid && cityForm.get('name')?.touched) {
                 <div class="error-message">
                     City is required.
                 </div>
             }
         </div>
         <button [disabled]="(cityForm.invalid)"
-                (click)="-submitCityForm()" class="submit-btn">Save</button>
+                (click)="-submitCityForm()" class="submit-btn">Save
+        </button>
     </form>
     <form [formGroup]="userForm" class="user-form">
-    <div>
-        <label>User Name
-            <span>*</span>
-        </label>
-        <input type="text" formControlName="name" placeholder="Enter your name" class="form-input"/>
-        @if (userForm.get('name')?.invalid && userForm.get('name')?.touched) {
-            <div class="error-message">
-                User Name is required.
-            </div>
-        }
-    </div>
+        <div>
+            <label>User Name
+                <span>*</span>
+            </label>
+            <input type="text" formControlName="name" placeholder="Enter your name" class="form-input"/>
+            @if (userForm.get('name')?.invalid && userForm.get('name')?.touched) {
+                <div class="error-message">
+                    User Name is required.
+                </div>
+            }
+        </div>
 
-    <div class="form-group">
-        <label>Birthdate</label>
-        <input type="date" formControlName="birthdate"/>
-    </div>
+        <div class="form-group">
+            <label>Birthdate</label>
+            <input type="date" formControlName="birthdate"/>
+        </div>
 
-    <div formArrayName="addresses" class="addresses-section">
-        @for (address of addresses.controls; track $index) {
-            <div [formGroupName]="$index" class="address-group">
-                <app-address (addressFormSaved)="onAddressFormSaved()"></app-address>
-                @if(addresses.length > 1) {
-                    <button type="button" class="remove-btn" (click)="removeAddress($index)">Remove Address</button>
-                }
-            </div>
-        }
-    </div>
+        <div formArrayName="addresses" class="addresses-section">
+            @for (address of addresses.controls; track $index) {
+                <div [formGroupName]="$index" class="address-group">
+                    <app-address (addressFormSaved)="onAddressFormSaved()"></app-address>
+                    @if (addresses.length > 1) {
+                        <button type="button" class="remove-btn" (click)="removeAddress($index)">Remove Address</button>
+                    }
+                </div>
+            }
+        </div>
 
-    <button type="button" class="add-btn" (click)="addAddress()">Add Address</button>
-    <button [disabled]="(!isAddressFormValid || userForm.invalid)"
-            (click)="-onSubmit()" class="submit-btn">Save</button>
-</form>
+        <button type="button" class="add-btn" (click)="addAddress()">Add Address</button>
+        <button [disabled]="(!isAddressFormValid || userForm.invalid)"
+                (click)="-onSubmit()" class="submit-btn">Save
+        </button>
+    </form>
 </div>

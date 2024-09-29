@@ -1,17 +1,11 @@
 import {ChangeDetectionStrategy, Component, inject, OnDestroy, OnInit} from '@angular/core';
 import {Subscription} from "rxjs";
 import {UsersService} from "../shared/users.service";
-import {FormArray, FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
-import {AddressComponent} from "../address/address.component";
+import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
 
 @Component({
     selector: 'app-add-user',
-    standalone: true,
-    imports: [
-        ReactiveFormsModule,
-        AddressComponent
-    ],
     templateUrl: './add-user.component.html',
     styleUrl: './add-user.component.scss',
     changeDetection: ChangeDetectionStrategy.OnPush
@@ -41,8 +35,9 @@ export class AddUserComponent implements OnInit, OnDestroy {
 
     onSubmit(): void {
         if (this.userForm.valid && this.addresses.length>=1 && this.isAddressFormValid) {
-            this.usersService.addUser(this.userForm.value).subscribe()
-            this.router.navigate(['/users'])
+            this.usersService.addUser(this.userForm.value).subscribe(() => {
+                this.router.navigate(['/users'])
+            })
         } else {
             console.log('Form is not valid');
         }
@@ -57,7 +52,7 @@ export class AddUserComponent implements OnInit, OnDestroy {
             addressName: [''],
             street: [''],
             country: [''],
-            city: this.fb.array([])
+            city: ['']
         });
     }
 
@@ -76,7 +71,9 @@ export class AddUserComponent implements OnInit, OnDestroy {
 
     submitCityForm() :void {
         if(this.cityForm.valid) {
-            this.usersService.addCity(this.cityForm.value).subscribe()
+            this.usersService.addCity(this.cityForm.value).subscribe(() => {
+                alert('City was created successfully')
+            })
         }
     }
 

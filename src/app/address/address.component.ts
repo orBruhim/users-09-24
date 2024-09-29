@@ -1,7 +1,7 @@
-import {ChangeDetectionStrategy, Component, EventEmitter, inject, OnInit, Output} from '@angular/core';
+import {ChangeDetectionStrategy, Component, EventEmitter, inject, OnDestroy, OnInit, Output} from '@angular/core';
 import {ControlValueAccessor, FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {UsersService} from "../shared/users.service";
-import {switchMap} from "rxjs";
+import {Subscription, switchMap} from "rxjs";
 
 @Component({
     selector: 'app-address',
@@ -13,11 +13,13 @@ import {switchMap} from "rxjs";
     styleUrl: './address.component.scss',
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AddressComponent implements ControlValueAccessor, OnInit {
+export class AddressComponent implements ControlValueAccessor, OnInit, OnDestroy {
 
     @Output() addressFormSaved= new EventEmitter<void>();
+
     private fb = inject(FormBuilder);
     private usersService = inject(UsersService);
+    private subscriptions= new Subscription();
 
     countries = this.usersService.countries;
     cities = this.usersService.cities;
@@ -30,8 +32,13 @@ export class AddressComponent implements ControlValueAccessor, OnInit {
     });
 
     ngOnInit(): void {
-        this.usersService.getCountries().subscribe();
-        this.initializeCities();
+        this.usersService.getCountries().subscribe(() => {
+            this.initializeCities();
+        });
+    }
+
+    ngOnDestroy() :void {
+        this.subscriptions.unsubscribe();
     }
 
     writeValue(value: any): void {
@@ -41,11 +48,12 @@ export class AddressComponent implements ControlValueAccessor, OnInit {
     }
 
     registerOnChange(fn: any): void {
-        this.addressForm.valueChanges.subscribe(() => {
+       const sub= this.addressForm.valueChanges.subscribe(() => {
             fn({
                 ...this.addressForm.value,
             });
         });
+       this.subscriptions.add(sub);
     }
 
 
@@ -62,10 +70,12 @@ export class AddressComponent implements ControlValueAccessor, OnInit {
 
 
     private initializeCities(): void {
-        this.addressForm.get(['country'])?.valueChanges.pipe(
+      const sub=  this.addressForm.get(['country'])?.valueChanges.pipe(
             switchMap((countryId: number) => {
                 return this.usersService.getCitiesByCountry(countryId)
             })
         ).subscribe()
+        this.subscriptions.add(sub);
     }
+
 }

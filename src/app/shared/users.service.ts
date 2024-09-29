@@ -43,13 +43,14 @@ export class UsersService {
     }
 
     addCity(city: City) :Observable<City> {
+        const {name, countryId} = city ;
         const body= {
-            name: city.name,
-            countryId: +city.countryId,
+            name,
+            countryId: +countryId,
         }
         return this.http.post<City>(`${this.baseUrl}/city`, body).pipe(
             tap(() => {
-                this.getCitiesByCountry(+city.countryId)
+                this.getCitiesByCountry(+countryId)
             })
         )
     }

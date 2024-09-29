@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {CommonModule, DatePipe, TitleCasePipe} from '@angular/common';
 import {UsersComponent} from "./users.component";
 import {RouterModule, Routes} from "@angular/router";
 
@@ -8,10 +8,12 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  declarations: [],
+  declarations: [UsersComponent],
   imports: [
     CommonModule,
-    RouterModule.forChild(routes)
+    RouterModule.forChild(routes),
+    TitleCasePipe,
+    DatePipe,
   ]
 })
 export class UsersModule { }
